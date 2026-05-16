@@ -1,0 +1,23 @@
+{
+  "name": "com.malayalambiblepro.myapp",
+  "displayName": "Malayalam Bible",
+  "version": "1.0.0",
+  "description": "Beautifully designed Malayalam Bible App. Easy reading tracker & offline access.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Fifi and Fiya",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^14.0.1"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  }
+}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malayalam Bible Pro v 1.0</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Header -->
+        <div class="header" id="header">
+            <h1 id="headerTitle">സത്യവേദപുസ്തകം</h1>
+            <!-- Two separate pill docks on the same row -->
+            <div class="header-nav-row hidden" id="headerNav">
+                <!-- Pages pill (left): Home + Chapters -->
+                <div class="chapter-nav nav-pages-pill">
+                    <button class="nav-btn" id="homeBtn" title="Home">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                            <line x1="10" y1="7" x2="16" y2="7" />
+                            <line x1="10" y1="11" x2="16" y2="11" />
+                            <line x1="10" y1="15" x2="16" y2="15" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" id="chaptersBtn" title="Chapters">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18" />
+                            <path d="M3 15h18" />
+                            <path d="M9 3v18" />
+                            <path d="M15 3v18" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Controls pill (right): prev, zoom, next, bookmark -->
+                <div class="chapter-nav nav-controls-pill">
+                    <button class="nav-btn" id="prevChapterBtn" title="Previous">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" id="zoomOutBtn" title="Zoom Out">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                            <line x1="8" y1="11" x2="14" y2="11" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn chapter-bookmark-nav-btn" id="bookmarkChapterBtn" title="Bookmark this Chapter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                    <button class="nav-btn" id="zoomInBtn" title="Zoom In">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                            <line x1="11" y1="8" x2="11" y2="14" />
+                            <line x1="8" y1="11" x2="14" y2="11" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" id="nextChapterBtn" title="Next">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Books View -->
+            <div id="booksView">
+                <div class="section">
+                    <div class="section-title">പഴയനിയമം</div>
+                    <div id="oldTestament"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">പുതിയനിയമം</div>
+                    <div id="newTestament"></div>
+                </div>
+            </div>
+
+            <!-- Chapters View -->
+            <div id="chaptersView" class="hidden">
+                <div id="chaptersGrid" class="chapters-grid"></div>
+            </div>
+
+            <div id="versesView" class="hidden">
+                <div id="versesList" class="verses-container"></div>
+            </div>
+        </div>
+
+        <!-- Scroll & End Indicators -->
+        <div id="scrollIndicator" class="scroll-indicator">
+            <div class="mouse-icon">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow-down"></div>
+        </div>
+        <div id="endPageOverlay" class="end-page-overlay"></div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <button class="toolbar-btn" data-action="dailyPlan" title="Reading Tracker">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Tracker</span>
+            </button>
+            <button class="toolbar-btn" data-action="bookmarks" title="Saved">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>Saved</span>
+            </button>
+            <button class="toolbar-btn" data-action="search" title="Search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <span>Search</span>
+            </button>
+            <button class="toolbar-btn" data-action="notes" title="Notes">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Notes</span>
+            </button>
+            <button class="toolbar-btn" data-action="settings" title="Settings">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M12 1v6m0 6v6m5.196-15.804l-4.242 4.242m0 6.364l-4.242 4.242M23 12h-6m-6 0H1m15.804 5.196l-4.242-4.242m0-6.364l-4.242-4.242">
+                    </path>
+                </svg>
+                <span>Settings</span>
+            </button>
+        </div>
+
+        <!-- Start Page Overlay -->
+        <div id="startPageOverlay" class="start-page-overlay"></div>
+
+        <!-- Floating Next Button -->
+        <button id="floatingNextBtn" class="floating-next-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+            </svg>
+        </button>
+
+        <!-- Modal Overlay -->
+        <div id="modalOverlay" class="modal-overlay"></div>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-btn" data-modal="settingsModal">✕</button>
+            </div>
+            <div class="modal-content">
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Windows XP Blue Theme</span>
+                            <button class="toggle-switch" id="toggleXPTheme">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Dark Theme</span>
+                            <button class="toggle-switch" id="toggleDark">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Disable Square Navigation</span>
+                            <button class="toggle-switch" id="toggleNavShape">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Bold Text</span>
+                            <button class="toggle-switch" id="toggleBoldText">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Disable Press & Hold to Save</span>
+                            <button class="toggle-switch" id="togglePressHold">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Hide all buttons in verse</span>
+                            <button class="toggle-switch" id="toggleVerseButtons">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="toggle-label">
+                            <span>Center Verse View</span>
+                            <button class="toggle-switch" id="toggleCenterView">
+                                <div class="toggle-switch-dot"></div>
+                            </button>
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="settings-group">
+                    <h3>About This App</h3>
+                    <div class="about-card">
+                        <p class="about-title">Malayalam Bible Pro v1.0.1 (2026)<br><span
+                                style="font-weight:normal; font-size: 13px;">Developers: Fifi and Fia</span></p>
+                        <p class="about-text" style="margin-top: 8px;">By the grace of God, this app was created and
+                            published on the App Store.All credits and acknowledgments go to the original content
+                            creators.The data used in this
+                            app was open sourced from GitHub. This application is intended solely for personal reading
+                            and educational
+                            purposes.The developers have not altered the core content but have focused on enhancing
+                            accessibility
+                            and user experience for Malayalam-speaking readers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Modal -->
+        <div id="searchModal" class="modal">
+            <div class="modal-header">
+                <h2>Search</h2>
+                <button class="close-btn" data-modal="searchModal">✕</button>
+            </div>
+            <div class="search-header">
+                <div class="search-bar-container">
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="വാക്കുകൾ, വചനങ്ങൾ, അല്ലെങ്കിൽ അധ്യായങ്ങൾ തിരയുക..." autofocus>
+                    <button id="clearSearchBtn" class="clear-search-btn" title="Clear Search"
+                        style="display: none;">✕</button>
+                    <button id="searchTriggerBtn" class="search-btn">Search</button>
+                </div>
+            </div>
+            <div id="searchResults" class="modal-content"></div>
+        </div>
+
+        <!-- Bookmarks Modal -->
+        <div id="bookmarksModal" class="modal">
+            <div class="modal-header">
+                <h2>Saved</h2>
+                <button class="close-btn" data-modal="bookmarksModal">✕</button>
+            </div>
+            <div class="modal-content">
+                <!-- Saved Chapters Section -->
+                <div class="bookmarks-section-header">📖 Saved Chapters</div>
+                <div id="chapterBookmarksList"></div>
+                <!-- Saved Verses Section -->
+                <div class="bookmarks-section-header">🔖 Saved Verses</div>
+                <div id="bookmarksList"></div>
+            </div>
+        </div>
+
+        <!-- Notes Modal -->
+        <div id="notesModal" class="modal">
+            <div class="modal-header">
+                <h2>My Notes</h2>
+                <button class="close-btn" data-modal="notesModal">✕</button>
+            </div>
+            <div id="notesList" class="modal-content"></div>
+            <div class="modal-footer">
+                <input type="text" id="noteInput" class="note-input" placeholder="Add note..." style="margin: 0;">
+                <button id="saveNoteBtn" class="save-btn">Save</button>
+            </div>
+        </div>
+
+        <!-- Daily Reading Modal -->
+        <div id="dailyModal" class="modal">
+            <div class="modal-header">
+                <h2>Reading Tracker</h2>
+                <button class="close-btn" data-modal="dailyModal">✕</button>
+            </div>
+            <div class="modal-content">
+                <!-- Simple Progress Tracker -->
+                <div class="progress-tracker">
+                    <div class="progress-header">
+                        <h3>Your Progress</h3>
+                        <button id="resetProgressBtn" class="reset-btn" title="Reset Progress">🔄 Reset</button>
+                    </div>
+
+                    <!-- Progress Circle - Smaller -->
+                    <div class="progress-circle-container">
+                        <!-- <svg class="progress-ring" width="100" height="100">
+        <circle class="progress-ring__circle" stroke="var(--card-stroke)" stroke-width="8"
+            fill="transparent" r="42" cx="50" cy="50" />
+        <circle class="progress-ring__circle progress-ring__value" stroke="var(--accent-color)"
+            stroke-width="8" fill="transparent" r="42" cx="50" cy="50" />
+    </svg> -->
+                        <div class="progress-text-centered">
+                            <span id="progressPercent">0%</span>
+                            <span id="progressSubtext">Complete</span>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid - Compact -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalChapters">1189</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-card stat-highlight">
+                            <div class="stat-value" id="chaptersRead">0</div>
+                            <div class="stat-label">Read</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="chaptersRemaining">1189</div>
+                            <div class="stat-label">Remaining</div>
+                        </div>
+                    </div>
+                    <!-- Reading History Section -->
+                    <div class="history-section">
+                        <div class="history-header">
+                            <h4>📜 Reading History</h4>
+                            <button id="toggleHistoryBtn" class="toggle-history-btn">Show</button>
+                        </div>
+                        <div id="historyList" class="history-list hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
