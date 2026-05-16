@@ -7,18 +7,7 @@ This is a simple HTML/CSS/JavaScript Bible App that can run:
 In a web browser
 Using a local HTTP server
 Inside a Cordova mobile app
-🚀 Project Structure
-bible-app/
-│
-├── index.html
-├── style.css
-├── app.js
-├── data/
-│   └── bible.json
-├── assets/
-│   └── icons/
-└── README.md
-✅ Requirements
+
 
 Install one of these:
 
@@ -78,22 +67,6 @@ cd BibleApp
 Step 4 — Replace www Folder Files
 
 Copy these into the www folder:
-
-index.html
-style.css
-app.js
-data/
-assets/
-
-Example:
-
-BibleApp/
-└── www/
-    ├── index.html
-    ├── style.css
-    ├── app.js
-    ├── data/
-    └── assets/
 Step 5 — Add Android Platform
 cordova platform add android
 Step 6 — Build App
@@ -124,25 +97,5 @@ Live Server
 HTML CSS Support
 JavaScript (ES6) code snippets
 
-VS Code:
-
-Visual Studio Code
-
-⚠️ Common Issues
-Port Already in Use
-
-Use another port:
-
-python -m http.server 9000
-
-or
-
-npx http-server -p 9000
-Cordova Not Recognized
-
-Restart terminal after installation or verify:
-
-cordova -v
-📄 License
 
 Free to use for personal and educational projects
